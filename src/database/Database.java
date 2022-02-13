@@ -3,11 +3,12 @@ package database;
 import domain.Media;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Database {
     private static Database instance;
-    private final List<Media> mediaTable = new ArrayList<>();
+    private final List<Media> mediaTable = Collections.synchronizedList(new ArrayList<>());
 
     private Database() {
 

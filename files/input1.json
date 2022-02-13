@@ -46,5 +46,24 @@
         }
       }
     ]
-  }
+  },
+  "commands": [
+    {
+      "name": "modifyRatingMovie",
+      "movie": "The Godfather",
+      "rating": 10.0
+    },
+    {
+      "name": "modifyRatingShow",
+      "show": "Peaky Blinders",
+      "rating": 10.0,
+      "season": 1
+    },
+    {
+      "name": "getActors"
+    },
+    {
+      "name": "getMediaByActors"
+    }
+  ]
 }

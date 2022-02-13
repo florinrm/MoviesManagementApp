@@ -99,15 +99,26 @@ public class MediaQueriesServiceTest {
     }
 
     @Test
-    public void testGetMediaByGenre() throws NoMediaPresentException {
+    public void testGetMediaByGenre() {
         var media = MediaQueriesService.getMediaByGenre("Drama");
         Assertions.assertEquals(5, media.size());
         Assertions.assertEquals(5, media.stream().filter(e -> e.getGenre().equals("Drama")).count());
     }
 
     @Test
-    public void testGetMediaOrderedByRating() throws NoMediaPresentException {
+    public void testGetMediaOrderedByRating() {
         var media = MediaQueriesService.getMediaOrderedByRating();
         Assertions.assertEquals(5, media.size());
+    }
+
+    @Test
+    public void testGetMediaByTitle() throws NoMediaPresentException {
+        var media = MediaQueriesService.getMediaByTitle("Peaky Blinders");
+        Assertions.assertEquals("Peaky Blinders", media.getTitle());
+    }
+
+    @Test
+    public void testGetMediaByTitleNotFound() {
+        Assertions.assertThrows(NoMediaPresentException.class, () -> MediaQueriesService.getMediaByTitle("Peaky Blinders 2"));
     }
 }
