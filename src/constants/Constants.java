@@ -2,7 +2,6 @@ package constants;
 
 public class Constants {
     public final static String DATABASE = "database";
-    public final static String COMMANDS = "commands";
     public final static String MOVIES = "movies";
     public final static String SHOWS = "shows";
 

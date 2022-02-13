@@ -30,4 +30,8 @@ public class Show extends Media {
                 "seasonRatings=" + seasonRatings +
                 "} " + super.toString();
     }
+
+    public void setSeasonRating(int season, double rating) {
+        seasonRatings.put(season, rating);
+    }
 }

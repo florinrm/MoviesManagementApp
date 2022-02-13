@@ -2,6 +2,7 @@ package service;
 
 import database.Database;
 import domain.Media;
+import exceptions.NoMediaPresentException;
 
 import java.util.HashMap;
 import java.util.List;

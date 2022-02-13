@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Database {
     private static Database instance;
-    private List<Media> mediaTable = new ArrayList<>();
+    private final List<Media> mediaTable = new ArrayList<>();
 
     private Database() {
 
