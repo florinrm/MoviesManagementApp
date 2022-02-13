@@ -22,8 +22,6 @@ import java.util.concurrent.Executors;
 
 public class InputParsing {
     public static void parse(String inputPath) throws IOException, ParseException, IncorrectFormatException {
-        ExecutorService commandsExecutorService = Executors.newCachedThreadPool();
-
         JSONParser jsonParser = new JSONParser();
         JSONObject jsonObject = (JSONObject) jsonParser.parse(new FileReader(inputPath));
 
@@ -34,8 +32,35 @@ public class InputParsing {
         JSONArray jsonShows = (JSONArray)
                 database.get(Constants.SHOWS);
 
-        List<Runnable> commandsTasks = new ArrayList<>();
+        parseData(jsonMovies, jsonShows);
+        parseCommands(commands);
+    }
 
+    private static List<String> convertJSONArray(final JSONArray array) {
+        if (array != null) {
+            List<String> finalArray = new ArrayList<>();
+            for (Object object : array) {
+                finalArray.add((String) object);
+            }
+            return finalArray;
+        } else {
+            return null;
+        }
+    }
+
+    private static Map<Integer, Double> toMap(JSONObject jsonObj) throws JSONException, IncorrectFormatException {
+        Map<Integer, Double> map = new HashMap<>();
+        for (var element : jsonObj.entrySet()) {
+            String[] tokens = element.toString().split("=");
+            if (tokens.length != 2) {
+                throw new IncorrectFormatException();
+            }
+            map.put(Integer.parseInt(tokens[0]), Double.parseDouble(tokens[1]));
+        }
+        return map;
+    }
+
+    private static void parseData(JSONArray jsonMovies, JSONArray jsonShows) throws IncorrectFormatException {
         if (jsonMovies != null) {
             for (Object jsonMovie : jsonMovies) {
                 Database.getInstance().getMediaTable().add(new Movie(
@@ -59,6 +84,11 @@ public class InputParsing {
                 );
             }
         }
+    }
+
+    private static void parseCommands(JSONArray commands) {
+        ExecutorService commandsExecutorService = Executors.newCachedThreadPool();
+        List<Runnable> commandsTasks = new ArrayList<>();
 
         for (var item : commands) {
             var command = (JSONObject) item;
@@ -84,8 +114,23 @@ public class InputParsing {
                         e.printStackTrace();
                     }
                 });
-                case Constants.GET_ACTORS -> commandsTasks.add(() -> System.out.println(ActorsQueriesService.getActors()));
-                case Constants.GET_MEDIA_BY_ACTORS -> commandsTasks.add(() -> System.out.println(ActorsQueriesService.getMediaByActors()));
+                case Constants.GET_ACTORS -> commandsTasks.add(() ->
+                        System.out.println(ActorsQueriesService.getActors()));
+                case Constants.GET_MEDIA_BY_ACTORS -> commandsTasks.add(() ->
+                        System.out.println(ActorsQueriesService.getMediaByActors()));
+                case Constants.GET_MEDIA_BY_ACTOR -> commandsTasks.add(() ->
+                        System.out.println(MediaQueriesService.getMediaByActor((String) command.get(Constants.ACTOR))));
+                case Constants.GET_MEDIA_BY_GENRE -> commandsTasks.add(() ->
+                        System.out.println(MediaQueriesService.getMediaByGenre((String) command.get(Constants.TITLE))));
+                case Constants.GET_MEDIA_BY_TITLE -> commandsTasks.add(() ->
+                {
+                    try {
+                        System.out.println(MediaQueriesService.getMediaByTitle((String) command.get(Constants.TITLE)));
+                    } catch (NoMediaPresentException e) {
+                        e.printStackTrace();
+                    }
+                });
+                case Constants.GET_MEDIA_ORDERED_BY_RATING -> commandsTasks.add(() -> System.out.println(MediaQueriesService.getMediaOrderedByRating()));
             }
         }
 
@@ -96,30 +141,6 @@ public class InputParsing {
         commandsExecutorService.shutdown();
         while (!commandsExecutorService.isTerminated()) {
         }
-    }
-
-    private static List<String> convertJSONArray(final JSONArray array) {
-        if (array != null) {
-            List<String> finalArray = new ArrayList<>();
-            for (Object object : array) {
-                finalArray.add((String) object);
-            }
-            return finalArray;
-        } else {
-            return null;
-        }
-    }
-
-    public static Map<Integer, Double> toMap(JSONObject jsonObj) throws JSONException, IncorrectFormatException {
-        Map<Integer, Double> map = new HashMap<>();
-        for (var element : jsonObj.entrySet()) {
-            String[] tokens = element.toString().split("=");
-            if (tokens.length != 2) {
-                throw new IncorrectFormatException();
-            }
-            map.put(Integer.parseInt(tokens[0]), Double.parseDouble(tokens[1]));
-        }
-        return map;
     }
 
 }

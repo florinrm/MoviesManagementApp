@@ -17,6 +17,8 @@ public class Constants {
     public final static String YEAR = "year";
     public final static String RATING = "rating";
 
+    public final static String ACTOR = "actor";
+
     public final static String SEASONS = "seasons";
 
     // commands
@@ -24,4 +26,8 @@ public class Constants {
     public final static String MODIFY_RATING_SHOW = "modifyRatingShow";
     public final static String GET_ACTORS = "getActors";
     public final static String GET_MEDIA_BY_ACTORS = "getMediaByActors";
+    public final static String GET_MEDIA_BY_ACTOR = "getMediaByActor";
+    public final static String GET_MEDIA_BY_GENRE = "getMediaByGenre";
+    public final static String GET_MEDIA_BY_TITLE = "getMediaByTitle";
+    public final static String GET_MEDIA_ORDERED_BY_RATING = "getMediaOrderedByRating";
 }

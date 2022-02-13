@@ -64,6 +64,21 @@
     },
     {
       "name": "getMediaByActors"
+    },
+    {
+      "name": "getMediaByActor",
+      "actor": "Al Pacino"
+    },
+    {
+      "name": "getMediaByGenre",
+      "title": "Drama"
+    },
+    {
+      "name": "getMediaByTitle",
+      "title": "The Godfather"
+    },
+    {
+      "name": "getMediaOrderedByRating"
     }
   ]
 }
