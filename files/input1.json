@@ -1,0 +1,50 @@
+{
+  "database": {
+    "movies": [
+      {
+        "title": "The Godfather",
+        "year": 1972,
+        "genre": "Drama",
+        "casting": ["Al Pacino", "Marlon Brando"],
+        "rating": 9.8
+      },
+      {
+        "title": "The Godfather 2",
+        "year": 1974,
+        "genre": "Drama",
+        "casting": ["Al Pacino", "Robert De Niro"],
+        "rating": 9.8
+      },
+      {
+        "title": "The Godfather 3",
+        "year": 1990,
+        "genre": "Drama",
+        "casting": ["Al Pacino", "Andy Garcia"],
+        "rating": 8.0
+      }
+    ],
+    "shows": [
+      {
+        "title": "Peaky Blinders",
+        "year": 2013,
+        "genre": "Drama",
+        "casting": ["Cillian Murphy"],
+        "seasons": {
+          "0": 9.5,
+          "1": 8.9
+        }
+      },
+      {
+        "title": "The Sopranos",
+        "year": 1999,
+        "genre": "Drama",
+        "casting": ["James Gandolfini", "Michael Imperioli"],
+        "seasons": {
+          "0": 9.5,
+          "1": 8.9,
+          "2": 9.2
+        }
+      }
+    ]
+  }
+}
