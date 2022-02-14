@@ -21,7 +21,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class InputParsing {
-    public static void parse(String inputPath) throws IOException, ParseException, IncorrectFormatException {
+    public static void parse(String inputPath) throws IOException, ParseException, IncorrectFormatException, InterruptedException {
         JSONParser jsonParser = new JSONParser();
         JSONObject jsonObject = (JSONObject) jsonParser.parse(new FileReader(inputPath));
 
@@ -86,8 +86,7 @@ public class InputParsing {
         }
     }
 
-    private static void parseCommands(JSONArray commands) {
-        ExecutorService commandsExecutorService = Executors.newCachedThreadPool();
+    private static void parseCommands(JSONArray commands) throws InterruptedException {
         List<Runnable> commandsTasks = new ArrayList<>();
 
         for (var item : commands) {
@@ -98,7 +97,7 @@ public class InputParsing {
                         MediaQueriesService.modifyRatingShow(
                                 (String) command.get(Constants.SHOW),
                                 (Double) command.get(Constants.RATING),
-                                Math.toIntExact((Long) command.get(Constants.YEAR))
+                                Math.toIntExact((Long) command.get(Constants.SEASON))
                         );
                     } catch (NoMediaPresentException e) {
                         e.printStackTrace();
@@ -134,12 +133,15 @@ public class InputParsing {
             }
         }
 
-        for (var task : commandsTasks) {
-            commandsExecutorService.submit(task);
+        List<Thread> threads = new ArrayList<>();
+        commandsTasks.forEach(t -> threads.add(new Thread(t)));
+
+        for (Thread thread : threads) {
+            thread.start();
         }
 
-        commandsExecutorService.shutdown();
-        while (!commandsExecutorService.isTerminated()) {
+        for (Thread thread : threads) {
+            thread.join();
         }
     }
 

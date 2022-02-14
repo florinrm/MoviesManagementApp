@@ -19,6 +19,7 @@ public class Constants {
 
     public final static String ACTOR = "actor";
 
+    public final static String SEASON = "season";
     public final static String SEASONS = "seasons";
 
     // commands

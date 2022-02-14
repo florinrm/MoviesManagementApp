@@ -14,7 +14,7 @@ public class Database {
 
     }
 
-    public static Database getInstance() {
+    public synchronized static Database getInstance() {
         if (instance == null) {
             instance = new Database();
         }

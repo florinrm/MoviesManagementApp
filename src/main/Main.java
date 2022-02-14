@@ -7,7 +7,7 @@ import parsing.InputParsing;
 import java.io.IOException;
 
 public class Main {
-    public static void main(String[] args) throws IOException, ParseException, IncorrectFormatException {
+    public static void main(String[] args) throws IOException, ParseException, IncorrectFormatException, InterruptedException {
         InputParsing.parse(args[0]);
     }
 }
